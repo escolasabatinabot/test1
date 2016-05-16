@@ -1,7 +1,10 @@
 <?php
+
 require('parser.php');
+
 define('BOT_TOKEN', 'SEU TOKEN');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+
 function processMessage($message) {
   // processa a mensagem recebida
   $message_id = $message['message_id'];
@@ -9,6 +12,7 @@ function processMessage($message) {
   if (isset($message['text'])) {
     
     $text = $message['text'];//texto recebido na mensagem
+
     if (strpos($text, "/start") === 0) {
 		//envia a mensagem ao usuário
       sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'Olá, '. $message['from']['first_name'].
@@ -30,6 +34,7 @@ function processMessage($message) {
     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'Desculpe, mas só compreendo mensagens em texto'));
   }
 }
+
 function sendMessage($method, $parameters) {
   $options = array(
   'http' => array(
@@ -39,14 +44,21 @@ function sendMessage($method, $parameters) {
                 "Accept: application/json\r\n"
     )
 );
+
 $context  = stream_context_create( $options );
 file_get_contents(API_URL.$method, false, $context );
 }
+
 $update_response = file_get_contents(API_URL."getupdates");
+
 $response = json_decode($update_response, true);
+
 $length = count($response["result"]);
+
 $update = $response["result"][$length-1];
+
 if (isset($update["message"])) {
   processMessage($update["message"]);
 }
+
 ?>

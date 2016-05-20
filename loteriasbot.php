@@ -49,12 +49,14 @@ $context  = stream_context_create( $options );
 file_get_contents(API_URL.$method, false, $context );
 }
 
+//obtém as atualizações do bot
 $update_response = file_get_contents(API_URL."getupdates");
 
 $response = json_decode($update_response, true);
 
 $length = count($response["result"]);
 
+//obtém a última atualização recebida pelo bot
 $update = $response["result"][$length-1];
 
 if (isset($update["message"])) {

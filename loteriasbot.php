@@ -2,7 +2,7 @@
 
 require('parser.php');
 
-define('BOT_TOKEN', 'SEU TOKEN');
+define('BOT_TOKEN', '637146427:AAHf6cxSaMMWprsxXW3z1wSYJZGL20KbQq8');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 function processMessage($message) {
@@ -16,17 +16,17 @@ function processMessage($message) {
     if (strpos($text, "/start") === 0) {
 		//envia a mensagem ao usuário
       sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'Olá, '. $message['from']['first_name'].
-		'! Eu sou um bot que informa o resultado do último sorteio da Mega Sena. Será que você ganhou dessa vez? Para começar, escolha qual loteria você deseja ver o resultado', 'reply_markup' => array(
-        'keyboard' => array(array('Mega-Sena', 'Quina'),array('Lotofácil','Lotomania')),
+		'! Eu sou um bot que te ajuda a estudar a lição da Escola Sabatina. Escolha qual lição você quer estudar hoje.', 'reply_markup' => array(
+        'keyboard' => array(array('Adultos', 'Jovens'),array('Adolescentes','Digitais')),
         'one_time_keyboard' => true)));
-    } else if ($text === "Mega-Sena") {
-      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('megasena', $text)));
-    } else if ($text === "Quina") {
-      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('quina', $text)));
-    } else if ($text === "Lotomania") {
-      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('lotomania', $text)));
-    } else if ($text === "Lotofacil") {
-      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('lotofacil', $text)));
+    } else if ($text === "Adultos") {
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('adultos', $text)));
+    } else if ($text === "Jovens") {
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('jovens', $text)));
+    } else if ($text === "Adolescentes") {
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('adolescentes', $text)));
+    } else if ($text === "Digitais") {
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('digitais', $text)));
     } else {
       sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'Desculpe, mas não entendi essa mensagem. :('));
     }

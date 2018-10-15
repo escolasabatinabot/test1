@@ -17,10 +17,46 @@ function processMessage($message) {
 		//envia a mensagem ao usuário
       sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'Olá, '. $message['from']['first_name'].
 		'! Eu sou um bot que te ajuda a estudar a lição da Escola Sabatina. Escolha qual lição você quer estudar hoje.', 'reply_markup' => array(
-        'keyboard' => array(array('Adultos', 'Jovens'),array('Adolescentes','Digitais')),
+        'keyboard' => array(array('Adultos','Jovens'),array('Adolescentes','Digitais')),
         'one_time_keyboard' => true)));
     } else if ($text === "Adultos") {
-      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('adultos', $text)));
+    /*  sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('adultos', $text)));
+*/
+
+
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-13-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-12-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-11-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-10-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-09-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-08-10-01'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-07-10-01'
+     ,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-06-09-30'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-05-09-30'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-04-09-30'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-03-09-30'
+,
+     sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-02-09-30'
+,
+      sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => 'https://telegra.ph/Adultos-01-09-29'
+
+     
+     , 
+      'reply_markup' => array(
+        'keyboard' => array(array('Adultos', 'Jovens'),array('Adolescentes','Digitais')),
+        'one_time_keyboard' => true)))))))))))))))))))))))))));
+        
+      
     } else if ($text === "Jovens") {
       sendMessage("sendMessage", array('chat_id' => $chat_id, "text" => getResult('jovens', $text)));
     } else if ($text === "Adolescentes") {
@@ -48,17 +84,12 @@ function sendMessage($method, $parameters) {
 $context  = stream_context_create( $options );
 file_get_contents(API_URL.$method, false, $context );
 }
-
-//obtém as atualizações do bot
-$update_response = file_get_contents(API_URL."getupdates");
-
-$response = json_decode($update_response, true);
-
-$length = count($response["result"]);
-
-//obtém a última atualização recebida pelo bot
-$update = $response["result"][$length-1];
-
+/*Com o webhook setado, não precisamos mais obter as mensagens através do método getUpdates.Em vez disso, 
+* como o este arquivo será chamado automaticamente quando o bot receber uma mensagem, utilizamos "php://input"
+* para obter o conteúdo da última mensagem enviada ao bot. 
+*/
+$update_response = file_get_contents("php://input");
+$update = json_decode($update_response, true);
 if (isset($update["message"])) {
   processMessage($update["message"]);
 }
